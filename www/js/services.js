@@ -1,4 +1,4 @@
-angular.module("footstapp.services", [])
+angular.module("foot-stapp.services", [])
 
 .service("LoginService", function($q) {
 
@@ -143,4 +143,20 @@ angular.module("footstapp.services", [])
 
   };
 
+})
+
+.factory("FireBase", function() {
+  var firebase = null;
+
+  return {
+
+    ref: function() {
+      if (firebase === null) {
+        firebase = new Firebase("https://boiling-torch-9398.firebaseio.com");
+      }
+
+      return firebase;
+    }
+
+  };
 });

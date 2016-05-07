@@ -1,11 +1,20 @@
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
-// 'footstapp' is the name of this angular module example (also set in a <body> attribute in index.html)
+// 'foot-stapp' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'footstapp.services' is found in services.js
-// 'footstapp.controllers' is found in controllers.js
-angular.module('footstapp', ['ionic', 'footstapp.controllers', 'footstapp.services'])
+// 'foot-stapp.services' is found in services.js
+// 'foot-stapp.controllers' is found in controllers.js
+angular.module('foot-stapp',[
+  'ionic',
+  'foot-stapp.controllers',
+  'foot-stapp.services'
+])
+
+.constant(
+  "firebase",
+  new Firebase("https://boiling-torch-9398.firebaseio.com")
+)
 
 .run(function($ionicPlatform) {
 
@@ -34,6 +43,18 @@ angular.module('footstapp', ['ionic', 'footstapp.controllers', 'footstapp.servic
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
+
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  })
+
+  .state('sign-up', {
+    url: '/sign-up',
+    templateUrl: 'templates/sign-up.html',
+    controller: 'SignUpCtrl'
+  })
 
   // setup an abstract state for the tabs directive
   .state('tab', {
@@ -74,18 +95,6 @@ angular.module('footstapp', ['ionic', 'footstapp.controllers', 'footstapp.servic
     }
   })
 
-  .state('login', {
-    url: '/login',
-    templateUrl: 'templates/login.html',
-    controller: 'LoginCtrl'
-  })
-
-  .state('signup', {
-    url: '/signup',
-    templateUrl: 'templates/signup.html',
-    controller: 'LoginCtrl'
-  })
-
   .state('tab.account', {
     url: '/account',
     views: {
@@ -97,6 +106,8 @@ angular.module('footstapp', ['ionic', 'footstapp.controllers', 'footstapp.servic
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/home');
+  // $urlRouterProvider.otherwise('/tab/home');
+  // $urlRouterProvider.otherwise('/sign-up');
+  $urlRouterProvider.otherwise('/login');
 
 });

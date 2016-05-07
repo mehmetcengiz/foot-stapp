@@ -1,7 +1,7 @@
 {
-  "name": "footstapp",
-  "version": "1.1.1",
-  "description": "Footstapp: An Ionic project",
+  "name": "foot-stapp",
+  "version": "0.1.0",
+  "description": "FootStapp: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
