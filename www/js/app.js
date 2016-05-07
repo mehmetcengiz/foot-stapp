@@ -8,19 +8,23 @@
 angular.module('footstapp', ['ionic', 'footstapp.controllers', 'footstapp.services'])
 
 .run(function($ionicPlatform) {
+
   $ionicPlatform.ready(function() {
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
     }
-    
+
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
   });
+
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -32,7 +36,7 @@ angular.module('footstapp', ['ionic', 'footstapp.controllers', 'footstapp.servic
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
@@ -43,40 +47,43 @@ angular.module('footstapp', ['ionic', 'footstapp.controllers', 'footstapp.servic
   .state('tab.home', {
     url: '/home',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
+      'tab-home': {
+        templateUrl: 'templates/tab-home.html',
         controller: 'HomeCtrl'
       }
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
+  .state('tab.events', {
+    url: '/events',
+    views: {
+      'tab-events': {
+        templateUrl: 'templates/tab-events.html',
+        controller: 'EventsCtrl'
       }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
-    .state('login', {
-      url: '/login',
-      templateUrl: 'templates/login.html',
-      controller: 'LoginCtrl'
+    }
   })
-    .state('signup', {
-      url: '/signup',
-      templateUrl: 'templates/signup.html',
-      controller: 'LoginCtrl'
+
+  .state('tab.event-detail', {
+    url: '/events/:eventId',
+    views: {
+      'tab-events': {
+        templateUrl: 'templates/event-detail.html',
+        controller: 'EventDetailCtrl'
+      }
+    }
+  })
+
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl'
+  })
+
+  .state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html',
+    controller: 'LoginCtrl'
   })
 
   .state('tab.account', {
@@ -87,7 +94,6 @@ angular.module('footstapp', ['ionic', 'footstapp.controllers', 'footstapp.servic
         controller: 'AccountCtrl'
       }
     }
-
   });
 
   // if none of the above states are matched, use this as the fallback

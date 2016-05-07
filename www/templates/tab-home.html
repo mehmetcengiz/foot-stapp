@@ -1,17 +1,19 @@
 <ion-view view-title="Home">
   <ion-content>
-    <ion-list>
+
+    <!-- Show events and collections if any -->
+    <ion-list ng-show="!!homecards.length">
       <ion-item ng-repeat="homecard in homecards">
         <div class="list card">
           <div class="item item-avatar">
-            <img src="{{homecard.avatar}}">
+            <img ng-src="{{homecard.avatar}}">
             <h2>{{homecard.name}}</h2>
             <p>November 05, 1955</p>
           </div>
 
           <div class="item item-body">
-            <img class="full-image" src="{{homecard.eventPhoto}}">
-            
+            <img class="full-image" ng-src="{{homecard.eventPhoto}}">
+
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, debitis.
             </p>
@@ -24,5 +26,8 @@
         </div>
       </ion-item>
     </ion-list>
+
+    <!-- No event or collection to display -->
+    <h1 ng-show="homecards.length == 0">Boş</h1>
   </ion-content>
 </ion-view>
