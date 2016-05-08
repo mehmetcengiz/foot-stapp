@@ -1,33 +1,34 @@
 <ion-view view-title="Home">
   <ion-content>
-
     <!-- Show events and collections if any -->
-    <ion-list ng-show="!!homecards.length">
-      <ion-item ng-repeat="homecard in homecards">
+    <ion-list>
+      <ion-item>
         <div class="list card">
           <div class="item item-avatar">
-            <img ng-src="{{homecard.avatar}}">
-            <h2>{{homecard.name}}</h2>
-            <p>November 05, 1955</p>
+            <img ng-src="/img/adam.jpg">
+            <h2>Emre Danışan</h2>
+            <p>01/02/2016</p>
+          </div>
+
+          <div class="item item-divider">
+            <p>Seen Times Square</p>
+            <p>
+              <a href="#" class="subdued">5346 <i class="ion-checkmark"></i></a>
+              <a href="#" class="subdued">13487 <i class="ion-heart"></i></a>
+            </p>
           </div>
 
           <div class="item item-body">
-            <img class="full-image" ng-src="{{homecard.eventPhoto}}">
+            <img class="full-image" ng-src="/img/emre_times_square.jpg">
+
+            <p>So excited to be here and done one of my wishes...</p>
 
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis, debitis.
-            </p>
-
-            <p>
-              <a href="#" class="subdued">1 Like</a>
-              <a href="#" class="subdued">5 Comments</a>
+              <a href="#" class="subdued">13 <i class="ion-thumbsup"></i></a>
             </p>
           </div>
         </div>
       </ion-item>
     </ion-list>
-
-    <!-- No event or collection to display -->
-    <h1 ng-show="!homecards.length">Boş</h1>
   </ion-content>
 </ion-view>

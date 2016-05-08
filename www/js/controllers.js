@@ -1,10 +1,27 @@
 angular.module("foot-stapp.controllers", [])
 
-.controller("LoginCtrl", function($scope, firebase, $location) {
+.controller("LoginCtrl", function($scope, shared, $location, $cordovaGeolocation, $ionicPlatform, $timeout) {
   $scope.data = {};
 
+
+// $ionicPlatform.ready(function() {
+//   $cordovaGeolocation
+//     .getCurrentPosition({
+//       timeout: 10000,
+//       enableHighAccuracy: false
+//     })
+//     .then(function (position) {
+//       var lat  = position.coords.latitude;
+//       var long = position.coords.longitude;
+
+// console.log({la: lat, lo: long});
+//   }, function(err) {
+//     // error
+//   });
+// });
+
   $scope.login = function() {
-    firebase.authWithPassword({
+    shared.firebase.ref.authWithPassword({
       email: $scope.data.email,
       password: $scope.data.password
     }, function(error, authData) {
@@ -12,7 +29,11 @@ angular.module("foot-stapp.controllers", [])
         // TODO Show error
         console.log(error);
       } else {
-        $location.path("/tab/home");
+        $timeout(function() {
+          console.log(authData);
+          shared.firebase.uid = shared.firebase.ref.getAuth().uid;
+          $location.path("/tab/home");
+        }, 50, true, authData);
       }
     }, {
       remember: "sessionOnly"
@@ -25,7 +46,7 @@ angular.module("foot-stapp.controllers", [])
   }
 })
 
-.controller("SignUpCtrl", function($scope, firebase, $ionicPopup, $location, $ionicHistory) {
+.controller("SignUpCtrl", function($scope, shared, $ionicPopup, $location, $ionicHistory) {
   $scope.data = {};
 
   $scope.showSuccessPopup = function(callback) {
@@ -39,10 +60,10 @@ angular.module("foot-stapp.controllers", [])
         callback.apply();
       }
     });
- };
+  };
 
   $scope.signUp = function() {
-    firebase.createUser({
+    shared.firebase.ref.createUser({
       email: $scope.data.email,
       password: $scope.data.password
     }, function(error, userData) {
@@ -63,10 +84,15 @@ angular.module("foot-stapp.controllers", [])
 })
 
 .controller("HomeCtrl", function($scope, $stateParams, HomeCards) {
-  $scope.homecards = HomeCards.all();
+  // $scope.homecards = HomeCards.all();
+  myDataRef.on("value", function(snapshot) {
+    var db = snapshot.val();
+    $scope.homecards = createHCOs(db,"Isyankar_45");
+console.log($scope.homecards);
+  });
 })
 
-.controller("EventsCtrl", function($scope, Events) {
+.controller("EventsCtrl", function($scope, $stateParams, eventsService, shared) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -75,11 +101,19 @@ angular.module("foot-stapp.controllers", [])
   //$scope.$on("$ionicView.enter", function(e) {
   //});
 
-  $scope.events = Events.all();
+var myDataRef = new Firebase('https://footstapp.firebaseio.com/');
+  // myDataRef.on("value", function(snapshot) {
+  //   var db = snapshot.val();
+  //   $scope.homecards = createHCOs(db,"Isyankar_45");
+  //   console.log($scope.homecards);
+  // });
 
-  $scope.remove = function(event) {
-    Events.remove(event);
-  };
+
+  $scope.events = eventsService.getEventsByUser(shared.uid);
+
+  // $scope.remove = function(event) {
+  //   eventsService.remove(event);
+  // };
 })
 
 .controller("ChatDetailCtrl", function($scope, $stateParams, Chats) {

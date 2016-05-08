@@ -1,15 +1,64 @@
 <ion-view view-title="Events">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="event in events" type="item-text-wrap" href="#/tab/events/{{event.id}}">
-        <img ng-src="{{event.face}}">
-        <h2>{{event.name}}</h2>
-        <p>{{event.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
+      <ion-item class="item-avatar item-icon-right" type="item-text-wrap" href="#/tab/events/{{event.id}}">
+        <img ng-src="/img/times_square.jpg">
+        <h2>See Times Square</h2>
+        <p>
+          #touristic #popular
+        </p>
+        <p>
+          <a href="#" class="subdued">5346 <i class="ion-checkmark"></i></a>
+          <a href="#" class="subdued">13487 <i class="ion-heart"></i></a>
+        </p>
+      </ion-item>
 
-        <ion-option-button class="button-assertive" ng-click="remove(event)">
-          Delete
-        </ion-option-button>
+      <ion-item class="item-avatar item-icon-right" type="item-text-wrap" href="#/tab/events/{{event.id}}">
+        <img ng-src="/img/everest.jpg">
+        <h2>Climb Everest</h2>
+        <p>
+          #touristic #adventure
+        </p>
+        <p>
+          <a href="#" class="subdued">356 <i class="ion-checkmark"></i></a>
+          <a href="#" class="subdued">4563 <i class="ion-heart"></i></a>
+        </p>
+      </ion-item>
+
+      <ion-item class="item-avatar item-icon-right" type="item-text-wrap" href="#/tab/events/{{event.id}}">
+        <img ng-src="/img/eiffel_tower.jpg">
+        <h2>See Eiffel Tower</h2>
+        <p>
+          #touristic #popular
+        </p>
+        <p>
+          <a href="#" class="subdued">4665 <i class="ion-checkmark"></i></a>
+          <a href="#" class="subdued">13487 <i class="ion-heart"></i></a>
+        </p>
+      </ion-item>
+
+      <ion-item class="item-avatar item-icon-right" type="item-text-wrap" href="#/tab/events/{{event.id}}">
+        <img ng-src="/img/pisa_tower.jpg">
+        <h2>Leaning to Pisa Tower</h2>
+        <p>
+          #touristic #popular
+        </p>
+        <p>
+          <a href="#" class="subdued">2365 <i class="ion-checkmark"></i></a>
+          <a href="#" class="subdued">23545 <i class="ion-heart"></i></a>
+        </p>
+      </ion-item>
+
+      <ion-item class="item-avatar item-icon-right" type="item-text-wrap" href="#/tab/events/{{event.id}}">
+        <img ng-src="/img/noodle.png">
+        <h2>Eat Noodle in China</h2>
+        <p>
+          #food #popular
+        </p>
+        <p>
+          <a href="#" class="subdued">2546 <i class="ion-checkmark"></i></a>
+          <a href="#" class="subdued">33215 <i class="ion-heart"></i></a>
+        </p>
       </ion-item>
     </ion-list>
   </ion-content>

@@ -5,18 +5,32 @@
 // the 2nd parameter is an array of 'requires'
 // 'foot-stapp.services' is found in services.js
 // 'foot-stapp.controllers' is found in controllers.js
-angular.module('foot-stapp',[
-  'ionic',
-  'foot-stapp.controllers',
-  'foot-stapp.services'
+angular.module("foot-stapp", [
+  "ionic",
+  "foot-stapp.controllers",
+  "foot-stapp.services",
+  "ngCordova",
+  "firebase"
 ])
 
 .constant(
-  "firebase",
-  new Firebase("https://boiling-torch-9398.firebaseio.com")
+  "shared",
+  {
+    firebase: {
+      url: "https://footstapp.firebaseio.com",
+      ref: null, // this will be new Firebase object
+    },
+    uid: "844d477f-5e4c-4b1c-885e-e8a89c56cb5f"
+    // uid: null // WARN this must be reset after logout
+  }
 )
 
-.run(function($ionicPlatform) {
+.constant(
+  "db",
+  null
+)
+
+.run(function($ionicPlatform, shared, db) {
 
   $ionicPlatform.ready(function() {
 
@@ -31,6 +45,8 @@ angular.module('foot-stapp',[
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    shared.firebase.ref = new Firebase(shared.firebase.url);
 
   });
 

@@ -1,35 +1,6 @@
 angular.module("foot-stapp.services", [])
 
-.service("LoginService", function($q) {
-
-  return {
-
-    loginUser: function(name, pw) {
-      var deferred = $q.defer();
-      var promise = deferred.promise;
-
-      if (name == "user" && pw == "secret") {
-        deferred.resolve("Welcome " + name + "!");
-      } else {
-        deferred.reject("Wrong credentials.");
-      }
-      promise.success = function(fn) {
-        promise.then(fn);
-        return promise;
-      }
-      promise.error = function(fn) {
-        promise.then(null, fn);
-        return promise;
-      }
-      return promise;
-    }
-
-  }
-
-})
-
 .factory("HomeCards", function() {
-
   var homecards = [
     {
       id: 0,
@@ -84,79 +55,55 @@ angular.module("foot-stapp.services", [])
 
 })
 
-.factory("Events", function() {
-  // Might use a resource here that returns a JSON array
+.factory("firebaseDataService", function(shared) {
 
-  // Some fake testing data
-  var chats = [
-    {
-      id: 0,
-      name: "Ben Sparrow",
-      lastText: "You on your way?",
-      face: "img/ben.png"
-    },
-    {
-      id: 1,
-      name: "Max Lynx",
-      lastText: "Hey, it\"s me",
-      face: "img/max.png"
-    },
-    {
-      id: 2,
-      name: "Adam Bradleyson",
-      lastText: "I should buy a boat",
-      face: "img/adam.jpg"
-    },
-    {
-      id: 3,
-      name: "Perry Governor",
-      lastText: "Look at my mukluks!",
-      face: "img/perry.png"
-    },
-    {
-      id: 4,
-      name: "Mike Harrington",
-      lastText: "This is wicked good ice cream.",
-      face: "img/mike.png"
-    }
-  ];
+  var root = new Firebase(shared.firebase.url);
 
-  return {
-
-    all: function() {
-      return chats;
-    },
-
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-
-      return null;
-    }
-
+  var service = {
+    root: root,
+    events: root.child('events'),
+    users: root.child('users'),
+    textMessages: root.child('textMessages')
   };
+
+  return service;
 
 })
 
-.factory("FireBase", function() {
-  var firebase = null;
+.factory("eventsService", function($firebaseArray, firebaseDataService) {
 
-  return {
+  var events = null;
 
-    ref: function() {
-      if (firebase === null) {
-        firebase = new Firebase("https://boiling-torch-9398.firebaseio.com");
-      }
+  var service = {
+    Event: Event,
+    getEventsByUser: getEventsByUser,
+    reset: reset
+  };
 
-      return firebase;
+  return service;
+
+  function Event() {
+    this.addedDate = "";
+    this.categories = null;
+    this.details = "";
+    this.doneCount = "";
+    this.name = "";
+    this.wishCount = "";
+  }
+
+  function getEventsByUser(uid) {
+    if (!events) {
+      events = $firebaseArray(firebaseDataService.users.child(uid).child("Events"));
     }
 
-  };
+    return events;
+  }
+
+  function reset() {
+    if (events) {
+      events.$destroy();
+      events = null;
+    }
+  }
+
 });
